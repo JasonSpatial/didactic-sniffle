@@ -44,10 +44,10 @@ public class ChillManager : MonoBehaviour
     {
         if (_charging && _chargePercentage < 100)
         {
-            _chargePercentage += (_chargeFactor * Time.deltaTime);
+            _chargePercentage += (_chargeFactor * Time.deltaTime)/_dischargeFactor;
         }
 
-        if (!_charging)
+        if (!_charging && _chargePercentage > 0)
         {
             _chargePercentage -= (_dischargeFactor * Time.deltaTime);
         }
