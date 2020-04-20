@@ -81,7 +81,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
         public MouseLook mouseLook = new MouseLook();
         public AdvancedSettings advancedSettings = new AdvancedSettings();
 
-
+        private PlayerSounds m_playerSounds;
         private Rigidbody m_RigidBody;
         private CapsuleCollider m_Capsule;
         private float m_YRotation;
@@ -119,6 +119,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private void Start()
         {
+            m_playerSounds = GetComponent<PlayerSounds>();
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
@@ -132,6 +133,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             if (Input.GetButtonDown("Jump") && !m_Jump)
             {
                 m_Jump = true;
+                m_playerSounds.PlayJump();
             }
         }
 
@@ -257,6 +259,8 @@ namespace UnityStandardAssets.Characters.FirstPerson
             }
             if (!m_PreviouslyGrounded && m_IsGrounded && m_Jumping)
             {
+                m_playerSounds.PlayLand();
+
                 m_Jumping = false;
             }
         }

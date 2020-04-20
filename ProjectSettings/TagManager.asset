@@ -5,6 +5,7 @@ TagManager:
   serializedVersion: 2
   tags:
   - Charger
+  - Fall Saver
   layers:
   - Default
   - TransparentFX

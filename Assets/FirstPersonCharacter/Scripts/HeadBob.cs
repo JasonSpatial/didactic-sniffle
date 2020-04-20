@@ -17,9 +17,10 @@ namespace UnityStandardAssets.Characters.FirstPerson
         private bool m_PreviouslyGrounded;
         private Vector3 m_OriginalCameraPosition;
 
-
+        private PlayerSounds m_PlayerSounds;
         private void Start()
         {
+            m_PlayerSounds = GetComponentInParent<PlayerSounds>();
             motionBob.Setup(Camera, StrideInterval);
             m_OriginalCameraPosition = Camera.transform.localPosition;
        //     m_CameraRefocus = new CameraRefocus(Camera, transform.root.transform, Camera.transform.localPosition);
@@ -45,6 +46,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if (!m_PreviouslyGrounded && rigidbodyFirstPersonController.Grounded)
             {
+                m_PlayerSounds.PlayLand();
                 StartCoroutine(jumpAndLandingBob.DoBobCycle());
             }
 
