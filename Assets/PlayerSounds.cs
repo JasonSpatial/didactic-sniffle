@@ -17,14 +17,48 @@ public class PlayerSounds : MonoBehaviour
 
     public void PlayJump()
     {
-        _audioSource.clip = jumpSound;
-        _audioSource.Play();
+        Debug.Log($"Playing? {GameManager.Instance.IsPlaying}");
+        if (GameManager.Instance.IsPlaying)
+        {
+            _audioSource.clip = jumpSound;
+            _audioSource.Play();
+        }
     }
 
     public void PlayLand()
     {
-        _audioSource.clip = landSound;
-        _audioSource.Play();
+        Debug.Log($"Playing? {GameManager.Instance.IsPlaying}");
+        if (GameManager.Instance.IsPlaying)
+        {
+            _audioSource.clip = landSound;
+            _audioSource.Play();
+        }
     }
+    
+    public void PlayFootstep(bool running)
+    {
+        Debug.Log($"Playing? {GameManager.Instance.IsPlaying}");
+        if (GameManager.Instance.IsPlaying && !_audioSource.isPlaying)
+        {
+            if (running)
+            {
+                StartCoroutine(PlayFootstepClip(0.2f));
+            }
+            else
+            {
+                StartCoroutine(PlayFootstepClip(0.6f));
+                
+            }
+        }
+    }
+
+    IEnumerator PlayFootstepClip(float delayBetweenSteps)
+    {
+        
+        _audioSource.clip = stepSounds[Random.Range(0,stepSounds.Length)];
+        _audioSource.Play();
+        yield return new WaitForSeconds(delayBetweenSteps);
+    }
+
 
 }

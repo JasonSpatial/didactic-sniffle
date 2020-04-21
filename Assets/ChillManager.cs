@@ -23,6 +23,7 @@ public class ChillManager : MonoBehaviour
         if (other.gameObject.CompareTag("Charger"))
         {
             Debug.Log("Charging");
+            GameManager.Instance.HelpStep2();
             _charging = true;
             _chargeFactor = other.gameObject.GetComponent<ChillCharger>().ChargeFactor;
             
@@ -39,19 +40,21 @@ public class ChillManager : MonoBehaviour
             
         }
     }
-
+    
     void Update()
     {
-        if (_charging && _chargePercentage < 100)
+        if (GameManager.Instance.IsPlaying && !GameManager.Instance.IsPaused)
         {
-            _chargePercentage += (_chargeFactor * Time.deltaTime)/_dischargeFactor;
-        }
+            if (_charging && _chargePercentage < 100)
+            {
+                _chargePercentage += (_chargeFactor * Time.fixedDeltaTime)/_dischargeFactor;
+            }
 
-        if (!_charging && _chargePercentage > 0)
-        {
-            _chargePercentage -= (_dischargeFactor * Time.deltaTime);
+            if (!_charging && _chargePercentage > 0)
+            {
+                _chargePercentage -= (_dischargeFactor * Time.fixedDeltaTime);
+            }
+            ChillBar.fillAmount = _chargePercentage/100;            
         }
-        ChillBar.fillAmount = _chargePercentage/100;
-
     }
 }

@@ -123,6 +123,7 @@ namespace UnityStandardAssets.Characters.FirstPerson
             m_RigidBody = GetComponent<Rigidbody>();
             m_Capsule = GetComponent<CapsuleCollider>();
             mouseLook.Init (transform, cam.transform);
+
         }
 
 
@@ -145,6 +146,9 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
             if ((Mathf.Abs(input.x) > float.Epsilon || Mathf.Abs(input.y) > float.Epsilon) && (advancedSettings.airControl || m_IsGrounded))
             {
+         
+                m_playerSounds.PlayFootstep(Running);
+
                 // always move along the camera forward as it is the direction that it being aimed at
                 Vector3 desiredMove = cam.transform.forward*input.y + cam.transform.right*input.x;
                 desiredMove = Vector3.ProjectOnPlane(desiredMove, m_GroundContactNormal).normalized;
@@ -212,14 +216,18 @@ namespace UnityStandardAssets.Characters.FirstPerson
 
         private Vector2 GetInput()
         {
-            
-            Vector2 input = new Vector2
+            if (GameManager.Instance.IsPlaying && !GameManager.Instance.IsPaused)
+            {
+                Vector2 input = new Vector2
                 {
                     x = Input.GetAxis("Horizontal"),
                     y = Input.GetAxis("Vertical")
                 };
-			movementSettings.UpdateDesiredTargetSpeed(input);
-            return input;
+                movementSettings.UpdateDesiredTargetSpeed(input);
+                return input;
+            }
+
+            return Vector2.zero;
         }
 
 

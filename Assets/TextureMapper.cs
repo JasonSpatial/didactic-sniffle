@@ -14,12 +14,12 @@ public class TextureMapper : MonoBehaviour
     void Awake()
     {
         rend = GetComponent<Renderer>();
-        foreach (var propertyName in rend.material.GetTexturePropertyNames())
-        {
-            Debug.Log(propertyName);
-        }
-       
-        Debug.Log($"{scaleX}:{scaleY}");
+        // foreach (var propertyName in rend.material.GetTexturePropertyNames())
+        // {
+        //     Debug.Log(propertyName);
+        // }
+        //
+        // Debug.Log($"{scaleX}:{scaleY}");
         var scale = scaleXIn / scaleYin;
         scaleX = transform.localScale.x * scale;
         scaleY = transform.localScale.y * scale;

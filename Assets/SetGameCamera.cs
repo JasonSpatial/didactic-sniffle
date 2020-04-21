@@ -2,27 +2,26 @@
 using System.Collections.Generic;
 using Cinemachine;
 using UnityEngine;
+using UnityStandardAssets.Characters.FirstPerson;
 
 public class SetGameCamera : MonoBehaviour
 {
     public CinemachineExternalCamera gameCamera;
 
     public CinemachineVirtualCamera dollyCamera;
-    
-    // Start is called before the first frame update
-    void Start()
+
+    public Camera mainCamera;
+
+    public void EnableGameCamera()
     {
-        
+        dollyCamera.gameObject.SetActive(false);
+        gameCamera.gameObject.SetActive(true);
     }
-
-    // Update is called once per frame
-    void Update()
+    
+    public void EnableCartCamera()
     {
-
-        if (Input.GetKey(KeyCode.Space))
-        {
-            dollyCamera.gameObject.SetActive(false);
-            gameCamera.gameObject.SetActive(true);
-        }
+        // mainCamera.gameObject.SetActive(true);
+        dollyCamera.gameObject.SetActive(true);
+        gameCamera.gameObject.SetActive(false);
     }
 }
